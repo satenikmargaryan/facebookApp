@@ -1,0 +1,7 @@
+<div class="container" *ngIf="photos.length">
+  <div class="row">
+    <div class="col-md-4" *ngFor="let photo of photos">
+      <img [src]="photo.images[0].source" class="img-responsive"/>
+    </div>
+  </div>
+</div>

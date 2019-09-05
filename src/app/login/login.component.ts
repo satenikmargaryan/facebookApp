@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
+import { HttpClient } from "@angular/common/http";
+
 declare var FB: any;
 @Component({
   selector: 'app-login',
@@ -7,21 +10,21 @@ declare var FB: any;
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private http: HttpClient) { }
 
   loginToFacebook(){
     // FB.login();
     FB.login((response)=>
     {
-      console.log('loginToFacebook',response);
+      const userId = response.authResponse.userID;
+      localStorage.removeItem('userId');
+      localStorage.setItem('userId', userId);
       if (response.authResponse) {
-        //login success
-        //login success code here
-        //redirect to home page
+        this.router.navigate(['photos'])
       } else {
         console.log('User login failed');
       }
-    });
+    }, { scope: 'user_photos' });
   }
 
   ngOnInit() {
